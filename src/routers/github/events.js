@@ -1,16 +1,17 @@
 const express = require('express')
-const emojis = express.Router()
+const events = express.Router()
 import { createGithubRequest } from '../../utils/index'
-import {
+import  {
 	GITHUB_API_BASE
 } from '../../../config/prod'
 
 /**
- * 获取表情列表
+ * 用户信息
  */
-emojis.get('/', async(req, res)=>{
+events.get('/', async(req, res)=>{
+	const { name } = req.params
 	const rq = createGithubRequest({
-		uri: `${GITHUB_API_BASE}/emojis`
+		uri: `${GITHUB_API_BASE}/events`
 	})
 	rq().then((resp)=>{
 		res.send({
@@ -21,4 +22,4 @@ emojis.get('/', async(req, res)=>{
 	})
 })
 
-export default emojis
+export default events

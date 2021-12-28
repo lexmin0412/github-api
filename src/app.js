@@ -1,8 +1,7 @@
-const express = require('express')
+import express from 'express'
 const app = express()
-const rq = require('request-promise')
-const bodyParser = require('body-parser')
-const githubRouter = require('./routers/github/index')
+import bodyParser from 'body-parser'
+import githubRouter from './routers/github/index'
 
 app.use(bodyParser())
 
@@ -13,7 +12,6 @@ app.get('/', function (req, res) {
 app.use('/github', githubRouter)
 
 // app.get('/github/users/:name', function(req, res) {
-
 // 	const { name } = parmas
 
 // 	var options = {

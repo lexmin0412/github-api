@@ -1,9 +1,7 @@
 const express = require('express')
 const users = express.Router()
-const { createGithubRequest } = require('../../utils/index')
-const {
-	GITHUB_API_BASE
-} = require('../../../config/prod')
+import { createGithubRequest } from './../../utils/index'
+import { GITHUB_API_BASE } from '../../../config/prod'
 
 /**
  * 用户信息
@@ -23,12 +21,13 @@ users.get('/:name', async(req, res)=>{
 })
 
 /**
- * 获取用户仓库列表
+ * 获取用户相关的数据列表
  */
-users.get('/:name/repos', async(req, res)=>{
-	const { name } = req.params
+users.get('/:name/:datatype', async(req, res)=>{
+	const { name, datatype} = req.params
 	const rq = createGithubRequest({
-		uri: `${GITHUB_API_BASE}/users/${name}/repos`
+		uri: `${GITHUB_API_BASE}/users/${name}/${datatype}`,
+		qs: req.query
 	})
 	rq().then((resp)=>{
 		res.send({
@@ -39,38 +38,74 @@ users.get('/:name/repos', async(req, res)=>{
 	})
 })
 
-/**
- * 获取用户关注者
- */
-users.get('/:name/followers', async(req, res)=>{
-	const { name } = req.params
-	const rq = createGithubRequest({
-		uri: `${GITHUB_API_BASE}/users/${name}/followers`
-	})
-	rq().then((resp)=>{
-		res.send({
-			code: 0,
-			data: resp,
-			msg: ''
-		})
-	})
-})
+// /**
+//  * 获取用户仓库列表
+//  */
+// users.get('/:name/repos', async(req, res)=>{
+// 	const { name } = req.params
+// 	const rq = createGithubRequest({
+// 		uri: `${GITHUB_API_BASE}/users/${name}/repos`,
+// 		qs: req.query
+// 	})
+// 	rq().then((resp)=>{
+// 		res.send({
+// 			code: 0,
+// 			data: resp,
+// 			msg: ''
+// 		})
+// 	})
+// })
 
-/**
- * 获取用户的关注用户列表
- */
-users.get('/:name/followers', async(req, res)=>{
-	const { name } = req.params
-	const rq = createGithubRequest({
-		uri: `${GITHUB_API_BASE}/users/${name}/following`
-	})
-	rq().then((resp)=>{
-		res.send({
-			code: 0,
-			data: resp,
-			msg: ''
-		})
-	})
-})
+// /**
+//  * 获取用户仓库列表
+//  */
+// users.get('/:name/starred', async(req, res)=>{
+// 	const { name } = req.params
+// 	const rq = createGithubRequest({
+// 		uri: `${GITHUB_API_BASE}/users/${name}/starred`,
+// 		qs: req.query
+// 	})
+// 	rq().then((resp)=>{
+// 		res.send({
+// 			code: 0,
+// 			data: resp,
+// 			msg: ''
+// 		})
+// 	})
+// })
 
-module.exports = users
+// /**
+//  * 获取用户关注者
+//  */
+// users.get('/:name/followers', async(req, res)=>{
+// 	const { name } = req.params
+// 	const rq = createGithubRequest({
+// 		uri: `${GITHUB_API_BASE}/users/${name}/followers`
+// 	})
+// 	rq().then((resp)=>{
+// 		res.send({
+// 			code: 0,
+// 			data: resp,
+// 			msg: ''
+// 		})
+// 	})
+// })
+
+// /**
+//  * 获取用户的关注用户列表
+//  */
+// users.get('/:name/followers', async(req, res)=>{
+// 	const { name } = req.params
+// 	const rq = createGithubRequest({
+// 		uri: `${GITHUB_API_BASE}/users/${name}/following`
+// 	})
+// 	rq().then((resp)=>{
+// 		res.send({
+// 			code: 0,
+// 			data: resp,
+// 			msg: ''
+// 		})
+// 	})
+// })
+
+export default users
