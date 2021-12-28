@@ -5,7 +5,7 @@
   "main": "dist/bundle.js",
   "scripts": {
     "start": "nodemon dist/bundle.js",
-		"dev": "npm run build --watch",
+    "dev": "npm run build --watch",
     "build": "rollup --config rollup.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,9 +24,6 @@
     "request-promise": "^4.2.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.5",
-    "@babel/plugin-transform-runtime": "^7.16.5",
-    "@babel/preset-env": "^7.16.5",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
