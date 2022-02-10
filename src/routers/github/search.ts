@@ -8,7 +8,12 @@ import {
 /**
  * 搜索代码
  */
-search.get('/:source_type', async(req, res)=>{
+search.get('/:source_type', async(req: {
+	params: {
+		source_type: 'code' | 'commits' | 'issues' | 'labels' | 'repositories' | 'topics' | 'users'
+	},
+	query: any
+}, res)=>{
 	const { source_type } = req.params
 	const rq = createGithubRequest({
 		uri: `${GITHUB_API_BASE}/search/${source_type}`,
