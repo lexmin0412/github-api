@@ -1,4 +1,4 @@
-const express = require('express')
+import express from 'express'
 const rq = require('request-promise')
 const oauth = express.Router()
 import {
@@ -13,7 +13,7 @@ import {createGithubRequest} from '../../utils'
 /**
  * oauth授权
  */
-oauth.get('/redirect', async(req, res)=>{
+oauth.get('/redirect', async(req: any, res: any)=>{
   console.log('回调参数', req.query);
   
   const requestToken = req.query.code;

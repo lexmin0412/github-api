@@ -1,4 +1,4 @@
-const express = require('express')
+import express from 'express'
 const search = express.Router()
 import { createGithubRequest } from '../../utils/index'
 import {
@@ -19,7 +19,7 @@ search.get('/:source_type', async(req: {
 		uri: `${GITHUB_API_BASE}/search/${source_type}`,
 		qs: req.query
 	})
-	rq().then((resp)=>{
+	rq().then((resp: any)=>{
 		res.send({
 			code: 0,
 			data: resp,

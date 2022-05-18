@@ -2,6 +2,7 @@ import express from 'express'
 const app = express()
 import bodyParser from 'body-parser'
 import githubRouter from './routers/github/index'
+import mockRouter from './routers/mock/index'
 
 app.use(bodyParser())
 
@@ -12,5 +13,6 @@ app.use(function (req, res, next) {
 })
 
 app.use('/github', githubRouter)
+app.use('/mock', mockRouter)
 
 app.listen(9080)

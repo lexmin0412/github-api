@@ -4,7 +4,7 @@ const rq = require('request-promise')
 /**
  * 通过原始头部的到github api需要的headers
  */
-export const getHeaders = (originHeaders) => {
+export const getHeaders = (originHeaders: any) => {
 	return {
 		'User-Agent': 'Request-Promise',
 		'Authorization': originHeaders.Authorization || GITHUB_API_BASE_TOKEN,
@@ -14,7 +14,7 @@ export const getHeaders = (originHeaders) => {
 /**
  * 创建一个github api请求
  */
-export const createGithubRequest = (opt) => {
+export const createGithubRequest = (opt: any) => {
 	var options = {
     json: true, // 自动将响应数据转为json格式
 		...opt,

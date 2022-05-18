@@ -1,4 +1,4 @@
-const express = require('express')
+import express from 'express'
 const github = express.Router()
 import users from './users'
 import repos from './repos'
