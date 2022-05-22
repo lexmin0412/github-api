@@ -2,6 +2,10 @@ import express from 'express'
 const apiMock = express.Router()
 import { createGithubRequest } from '../../utils/index'
 import dayjs from 'dayjs'
+import fs from 'fs'
+import path from 'path'
+
+const databasePath = path.join(__dirname, 'api-list.json')
 
 /**
  * 获取表情列表
@@ -116,5 +120,69 @@ apiMock.get('/list', async (req: any, res: any) => {
     msg: '恭喜我黄拿到数据啦'
   })
 })
+
+apiMock.get('/prod-api/mock_api_info', async (req: any, res: any) => {
+
+  const result: any = fs.readFileSync(databasePath, 'utf-8')
+  
+
+  console.log('result', result)
+  
+  res.send({
+    code: 0,
+    count: result.length,
+    results: JSON.parse(result).list.sort((a: any, b: any) =>b.id-a.id),
+    msg: '恭喜我黄拿到数据啦'
+  })
+} )
+
+apiMock.get('/prod-api/mock_api_detail', async (req: any, res: any) => {
+
+  const result: any = fs.readFileSync(databasePath, 'utf-8')
+  const { id } = req.query
+
+  const current = JSON.parse(result).list.find((item: any) => item.id === Number(id))
+
+  console.log('result', result)
+
+  res.send({
+    code: 0,
+    data: current ? {
+      ...current,
+      responseData: JSON.stringify(current.responseData)
+    }: null,
+    msg: '恭喜我黄拿到数据啦'
+  })
+})
+
+apiMock.post('/prod-api/mock_api_create', async(req: {
+  body: {
+    describe: string
+    method: string
+    url: string
+    statusCode: number
+    responseBody: any
+  }
+}, res: any) => {
+  const { body } = req
+  const database = require(databasePath)
+  const { list } = database
+  console.log('list', list)
+  const assembledData = {
+    ...database,
+    list: list.concat([{
+      ...body,
+      author: Math.random() > 0.5 ? '张三' : '李四',
+      create_time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      id: list.length + 1
+    }])
+  }
+  await fs.writeFileSync(databasePath, JSON.stringify(assembledData))
+  res.send({
+    code: 0,
+    results: null,
+    msg: '新增接口成功'
+  })
+} )
 
 export default apiMock
