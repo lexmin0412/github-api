@@ -9,6 +9,7 @@ app.use(bodyParser())
 app.use(function (req, res, next) {
   res.append('Access-Control-Allow-Origin', '*')  // 允许跨域
   res.append('Access-Control-Allow-Headers', '*')  // 允许传递header字段，如content-type
+  res.append('Access-Control-Allow-Methods', '*')  // 允许所有方法（如果不加put会报跨域）
   next()
 })
 
